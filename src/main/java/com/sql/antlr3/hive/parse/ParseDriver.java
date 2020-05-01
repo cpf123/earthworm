@@ -57,15 +57,19 @@ public class ParseDriver {
 
     public static int TABSPACE = 4;
 
-    private static final Logger LOG = LoggerFactory.getLogger("hive.ql.parse.ParseDriver");
+//    private static final Logger LOG = LoggerFactory.getLogger("hive.ql.parse.ParseDriver");
 
     public StringBuilder Format(String sql, StringBuilder sb) throws ParseException {
         // 解析
         ASTNode tr = this.parse(sql);
-        LOG.debug(tr.dump());
+//        ArrayList<Node> children = tr.getChildren();
+//        for (Node s: children   ) {
+//            System.out.println(s.getName());
+//        }
+//        LOG.debug(tr.dump());
         // 更新注释位置
         this.UpdateCommentsWhere(tr);
-        LOG.debug(this.AllCommentsDeq.toString());
+//        LOG.debug(this.AllCommentsDeq.toString());
         Deque<ASTNode> stack = new ArrayDeque<ASTNode>();
         HashMap<ASTNode, Boolean> vistmap = new HashMap<ASTNode, Boolean>();
         stack.push(tr);
@@ -73,6 +77,7 @@ public class ParseDriver {
         while (!stack.isEmpty()) {
             ASTNode next = stack.peek();
             if (vistmap.get(next) == null) {
+
                 sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
 //                System.out.println(next.getType() + next.getText());
                 if (next.getType() == HiveParser.TOK_CREATETABLE) {
@@ -81,15 +86,17 @@ public class ParseDriver {
                 }
                 if (next.getType() == HiveParser.TOK_QUERY) {
                     QueryFormat(true, next, sb, tabLength, "", "");
+//[@-1,0:0='TOK_CTE',<802>,6:7]TOK_CTE  删除多余符号
+//                    if (sb.toString().startsWith("[")) {
+//                        sb.delete(0, 37);
+//                    }
                     return sb;
                 }
 
                 if (!(next.getText() == null || next.getType() == HiveParser.EOF)) {
-//                    sb.append("<dump FOMAT TODO:>\n");
                     sb.append(next.getToken());
                     sb.append(next.getText());
-//                    System.out.println(next.getText());
-//                    sb.append("<dump FOMAT END:>\n");
+
                 }
                 if (next.getChildCount() > 0) {
                     List<Node> c = next.getChildren();
@@ -126,7 +133,6 @@ public class ParseDriver {
             } else if (returnChar == 0) {
                 return returnChar;
             }
-
             return Character.toUpperCase((char) returnChar);
         }
     }
@@ -165,7 +171,6 @@ public class ParseDriver {
             } else {
                 msg = super.getErrorMessage(e, tokenNames);
             }
-
             return msg;
         }
 
@@ -176,7 +181,6 @@ public class ParseDriver {
     }
 
     public class TreeAdaptor extends CommonTreeAdaptor {
-
         private HiveParser ps = null;
 
         public TreeAdaptor(HiveParser ps) {
@@ -196,7 +200,6 @@ public class ParseDriver {
 
         @Override
         public Token createToken(int tokenType, String text) {
-
             CommonToken ct = new CommonToken(tokenType, text);
 
             /*
@@ -247,10 +250,10 @@ public class ParseDriver {
                 AllCommentsDeq.addLast(cw);
             }
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Parsing command: " + command);
-            LOG.debug("All comments:" + AllCommentsDeq.toString());
-        }
+//        if (LOG.isDebugEnabled()) {
+//            LOG.debug("Parsing command: " + command);
+//            LOG.debug("All comments:" + AllCommentsDeq.toString());
+//        }
 
 
         HiveParser parser = new HiveParser(tokens);
@@ -265,7 +268,7 @@ public class ParseDriver {
         }
 
         if (lexer.getErrors().size() == 0 && parser.errors.size() == 0) {
-            LOG.debug("Parse Completed");
+//            LOG.debug("Parse Completed");
         } else if (lexer.getErrors().size() != 0) {
             throw new ParseException(lexer.getErrors());
         } else {
@@ -350,6 +353,7 @@ public class ParseDriver {
             if (AllCommentsDeq.size() > 0) {
                 CommentsWhere firstcomment = AllCommentsDeq.getFirst();
                 while (firstcomment.Where == null || firstcomment.Where == node.getToken()) {
+
                     // 判断一下上一行是否是空行 或 注释 如果是不要删除\n
                     if (sb.length() > 0 && sb.charAt(sb.length() - 1) == '\n' && NeedRemoveLastEnter(sb)) {
                         sb.delete(sb.length() - 1, sb.length());
@@ -378,6 +382,7 @@ public class ParseDriver {
 
         // 输出注释
         OutputComments(node, sb);
+
         switch (node.getType()) {
 
             // 创建表
@@ -478,7 +483,6 @@ public class ParseDriver {
 
                         default:
                             CreateFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
-
                     }
                 }
 
@@ -506,7 +510,7 @@ public class ParseDriver {
 
                             break;
                         default:
-                            sb.append("<ROW FOMAT TODO:>\n");
+
                             sb.append(((ASTNode) node).getToken());
                             sb.append(((ASTNode) node).getText());
                     }
@@ -664,20 +668,17 @@ public class ParseDriver {
                         break;
                         default:
 
-                            sb.append("<COLUMETYPE TODO:>");
+
                             sb.append(((ASTNode) i));
                             break;
                     }
-
                 }
                 sb.append(appendend);
                 sb.append('\n');
                 return true;
-
             }
 
             default:
-                sb.append("<CREATE FOMAT TODO:>\n");
                 sb.append(((ASTNode) node).getToken());
                 sb.append(((ASTNode) node).getText());
 
@@ -692,12 +693,28 @@ public class ParseDriver {
         // 当前的二元操作符号
         String nowopration = "";
 //        System.out.println(node.getName());
-        switch (node.getType()) {
 
+        switch (node.getType()) {
+            // 匹配 with
+            case HiveParser.TOK_CTE:{
+                sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
+                sb.append(appendbef);
+                List<Node> c0 = ((ASTNode) node).getChildren();
+                for (Node i1 : c0) {
+                    sb.append(((ASTNode) i1).getText() + ".");
+                    System.out.println(((ASTNode) i1).getText() + ".");
+                }
+//                sb.append("with \n");
+            }
+// 无匹配
             case HiveParser.KW_WITH: {
                 sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 sb.append(appendbef);
-
+                List<Node> c0 = ((ASTNode) node).getChildren();
+                for (Node i1 : c0) {
+                    sb.append(((ASTNode) i1).getText() + ".");
+                    System.out.println(((ASTNode) i1).getText() + ".");
+                }
                 sb.append("with \n");
 
                 List<Node> c1 = ((ASTNode) node).getChildren();
@@ -713,9 +730,7 @@ public class ParseDriver {
             case HiveParser.TOK_INSERT_INTO: {
                 sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 sb.append(appendbef);
-
                 sb.append("insert into \n");
-
                 List<Node> c1 = ((ASTNode) node).getChildren();
                 for (Node i1 : c1) {
                     QueryFormat(KeyUpper, (ASTNode) i1, sb, tabLength + 1, " ", "");
@@ -732,7 +747,6 @@ public class ParseDriver {
                 }
                 sb.append(appendbef);
                 sb.append(" local ");
-
                 sb.append(appendend);
                 return true;
             }
@@ -746,7 +760,6 @@ public class ParseDriver {
                 for (Node i1 : c1) {
                     QueryFormat(KeyUpper, (ASTNode) i1, sb, tabLength + 1, "", "\n");
                 }
-
                 sb.append(appendend);
                 return true;
             }
@@ -769,9 +782,7 @@ public class ParseDriver {
                     }
                     first = false;
                 }
-
                 sb.append(appendend);
-
                 return true;
             }
             //partitons 列表
@@ -786,11 +797,8 @@ public class ParseDriver {
 
                 boolean first = true;
                 for (Node i : c) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, first ? " " : ",", "\n");
-
                     first = false;
-
                 }
                 sb.append(")");
                 sb.append(appendend);
@@ -823,12 +831,12 @@ public class ParseDriver {
                                     return Integer.compare(((ASTNode) o1).getTokenStartIndex(), ((ASTNode) o2).getTokenStartIndex());
                                 }
                             });
-
+//[@-1,0:0='TOK_CTE',<802>,6:7]TOK_CTE  多余符号
                             if (c2.size() == 1 && ((ASTNode) c2.get(0)).getType() == HiveParser.TOK_TMP_FILE) {
                                 //临时文件运行需求
                                 return true;
                             }
-
+                            sb.append("TEST");
                             sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                             sb.append(appendbef);
 
@@ -847,6 +855,7 @@ public class ParseDriver {
                                 index++;
                             }
                             sb.append("\n");
+
                             sb.append(appendend);
                             break;
                         }
@@ -861,6 +870,7 @@ public class ParseDriver {
 
             // 表引用-》表名称
             case HiveParser.TOK_TABREF: {
+//                sb.append("TEST");
                 List<Node> c = node.getChildren();
                 int index = 0;
                 for (Node i : c) {
@@ -874,6 +884,7 @@ public class ParseDriver {
 
             // 表名称
             case HiveParser.TOK_TABNAME: {
+
                 if (sb.charAt(sb.length() - 1) == '\n') {
                     // 新行的注意一下
                     sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
@@ -891,6 +902,7 @@ public class ParseDriver {
 
             // select 列表
             case HiveParser.TOK_SELECTDI: {
+
                 sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 sb.append(appendbef);
                 sb.append(KeywordFormat("select distinct", KeyUpper));
@@ -939,7 +951,7 @@ public class ParseDriver {
                         sb.append(KeywordFormat("DISTINCT ", KeyUpper));
                         isfirst = false;
                     } else {
-                        QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, isfirstpar == false ? "," : "", "");
+                        QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, !isfirstpar ? "," : "", "");
                         isfirstpar = false;
                     }
 
@@ -982,9 +994,7 @@ public class ParseDriver {
                 }
                 // 类型转换
                 else if (funcname.equals("tok_int")) {
-
                     funcappendend = " as int)";
-
                     int i = 0;
                     for (Node i0 : c0) {
 
@@ -997,12 +1007,9 @@ public class ParseDriver {
                             i++;
                         }
                     }
-
                     sb.append(funcappendend);
-
                 } else if (funcname.equals("isnull") || funcname.equals("isnotnull")) {
                     // is null
-
                     if (funcname.equals("isnull")) {
                         funcappendend = " is  null";
                     } else if (funcname.equals("isnotnull")) {
@@ -1011,7 +1018,6 @@ public class ParseDriver {
 
                     int i = 0;
                     for (Node i0 : c0) {
-
                         if (isfirst) {
                             isfirst = false;
                         } else {
@@ -1025,69 +1031,53 @@ public class ParseDriver {
 
                 } else if (funcname.equals("between")) {
                     // in
-
                     funcappendend = "";
-
                     int i = 0;
                     for (Node i0 : c0) {
-
                         if (i == 0 || i == 1) {
-
                         } else if (i == 2) {
                             sb.append(" ");
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, "", "");
                             sb.append(" BETWEEN ");
                         } else if (i == 3) {
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, "", "");
-                            sb.append(" and ");
+                            sb.append(" AND ");
                         } else {
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, isfirstpar == false ? "" : "", "");
                             isfirstpar = false;
                         }
                         i++;
-
                     }
-
                     sb.append(funcappendend);
-
-                } else if (funcname.equals("in")) {
+                } else if (funcname.equals("IN")) {
                     // in
-
                     funcappendend = ")";
-
                     int i = 0;
                     for (Node i0 : c0) {
-
                         if (i == 0) {
-
                         } else if (i == 1) {
                             sb.append("\n");
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, "", "");
-                            sb.append(" in (");
+                            sb.append(" IN (");
                         } else {
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, isfirstpar == false ? "," : "", "");
                             isfirstpar = false;
                         }
                         i++;
-
                     }
-
                     sb.append(funcappendend);
-
-                } else if (funcname.equals("when")) {
+                } else if (funcname.equals("WHEN")) {
 
                     //
-                    // 1） 把里面的所有的 换行去掉： case when 里面嵌套 case when 的情况会受到影响。另外里面如果有注释就会有语法错误
+                    // 1） 把里面的所有的 换行去掉： case WHEN 里面嵌套 case WHEN 的情况会受到影响。另外里面如果有注释就会有语法错误
                     // 2) 单独一个sb ， 然后每行append 偏移量 ，然后合并到当前的里面来。
-                    // 3) 最后选择了  case when 特殊处理 ，其他各个分支根据是否之前有换行 决定自己是否换行和缩进
-
+                    // 3) 最后选择了  case WHEN 特殊处理 ，其他各个分支根据是否之前有换行 决定自己是否换行和缩进
 
                     //这个tableng 是单独定义的
                     int casetablength = (sb.length() - sb.lastIndexOf("\n")) / 4 + 1;
                     int i = 0;
                     int clen = c0.size();
                     for (Node i0 : c0) {
-
                         if (isfirst) {
                             if (sb.charAt(sb.length() - 1) == '\n') {
                                 // 新行的注意一下
@@ -1096,13 +1086,13 @@ public class ParseDriver {
                                 sb.append("\n");
                                 sb.append(StringUtils.repeat(" ", casetablength * ParseDriver.TABSPACE));
                             }
-                            sb.append("case");
+                            sb.append("CASE");
                             isfirst = false;
                         } else {
                             if (i % 2 == 0 && i + 2 != clen) {
                                 sb.append("\n");
                                 sb.append(StringUtils.repeat(" ", (casetablength + 1) * ParseDriver.TABSPACE));
-                                sb.append("when ");
+                                sb.append("WHEN ");
 
                                 QueryFormat(KeyUpper, (ASTNode) i0, sb, (casetablength + 2), "", "");
                                 i++;
@@ -1112,7 +1102,7 @@ public class ParseDriver {
                                 // 这个地方是是最后一个 需要用else ,间隔1个就到end了
                                 sb.append("\n");
                                 sb.append(StringUtils.repeat(" ", (casetablength + 1) * ParseDriver.TABSPACE));
-                                sb.append("else ");
+                                sb.append("ELSE ");
 
                                 QueryFormat(KeyUpper, (ASTNode) i0, sb, (casetablength + 2), "", "");
                                 i++;
@@ -1122,30 +1112,25 @@ public class ParseDriver {
                             if (i % 2 == 1) {
                                 sb.append("\n");
                                 sb.append(StringUtils.repeat(" ", (casetablength + 2) * ParseDriver.TABSPACE));
-                                sb.append("then ");
+                                sb.append("THEN ");
 
                                 QueryFormat(KeyUpper, (ASTNode) i0, sb, (casetablength + 3), "", "");
                                 i++;
                                 continue;
-
                             }
-
                             // System.out.println(((ASTNode) i0).getToken());
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, (casetablength + 1), "", "");
                             i++;
                         }
-
                     }
                     sb.append("\n");
                     sb.append(StringUtils.repeat(" ", casetablength * ParseDriver.TABSPACE));
-                    sb.append("end");
+                    sb.append("END ");
 
                 } else { // 常规的函数都能用这种形式
-
                     funcappendend = ")";
                     int i = 0;
                     for (Node i0 : c0) {
-
                         if (isfirst) {
                             sb.append(KeywordFormat(getTokenName((ASTNode) i0), KeyUpper));
                             sb.append("(");
@@ -1155,33 +1140,23 @@ public class ParseDriver {
                             isfirstpar = false;
                             i++;
                         }
-
                     }
-
                     sb.append(funcappendend);
                 }
-
                 sb.append(appendend);
-
                 return true;
             }
-
             // select 下面直接的item
-
             case HiveParser.TOK_TABLE_OR_COL: {
-
                 if (sb.charAt(sb.length() - 1) == '\n') {
                     // 新行的注意一下
                     sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 }
                 sb.append(appendbef);
-
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
-
                     sb.append(((ASTNode) i0).getText());
                 }
-
                 sb.append(appendend);
                 return true;
             }
@@ -1192,31 +1167,24 @@ public class ParseDriver {
                     // 新行的注意一下
                     sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 }
-
                 sb.append(appendbef);
-
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
-
                     switch (((ASTNode) i0).getType()) {
                         case HiveParser.Identifier: {
                             sb.append(KeywordFormat(".", KeyUpper));
-
                             sb.append(((ASTNode) i0).getText());
                             break;
                         }
-
                         case HiveParser.TOK_TABLE_OR_COL: {
                             List<Node> c1 = ((ASTNode) i0).getChildren();
                             for (Node i1 : c1) {
-
                                 sb.append(((ASTNode) i1).getText());
                             }
                             break;
                         }
                         default:
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, "", "");
-
                     }
                 }
 
@@ -1227,19 +1195,15 @@ public class ParseDriver {
 
             // select item
             case HiveParser.TOK_SELEXPR: {
-
 //                sb.append(StringUtils.repeat(" ", tabLength * FormatDriver.TABSPACE));
                 sb.append(appendbef);
-
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
 
                     switch (((ASTNode) i).getType()) {
 
                         case HiveParser.StringLiteral:
-
                             sb.append(((ASTNode) i).getText());
-
                             break;
 
                         case HiveParser.Identifier: {
@@ -1260,17 +1224,13 @@ public class ParseDriver {
                         }
 
                         // 这个是*号 什么都没有
-                        case HiveParser.TOK_SETCOLREF: {
-                            sb.append("*");
-                            break;
-                        }
+                        case HiveParser.TOK_SETCOLREF:
                         case HiveParser.TOK_ALLCOLREF: {
                             sb.append("*");
                             break;
                         }
 
                         default:
-
                             QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
                     }
                 }
@@ -1310,7 +1270,6 @@ public class ParseDriver {
 
                 sb.append("\n");
                 return true;
-
             }
 
             case HiveParser.STAR:
@@ -1373,14 +1332,12 @@ public class ParseDriver {
                 List<Node> c = node.getChildren();
                 boolean first = true;
                 for (Node i : c) {
-
                     if (!first) {
                         sb.append(KeywordFormat(nowopration, KeyUpper));
                         QueryFormat(KeyUpper, (ASTNode) i, sb, 0, "", "");
                     } else {
                         QueryFormat(KeyUpper, (ASTNode) i, sb, 0, "", "");
                     }
-
                     first = false;
                 }
                 sb.append(appendend);
@@ -1396,7 +1353,6 @@ public class ParseDriver {
                 List<Node> c = node.getChildren();
                 boolean first = true;
                 for (Node i : c) {
-
                     if (!first) {
                         sb.append(KeywordFormat("\n", KeyUpper));
                         sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
@@ -1423,7 +1379,6 @@ public class ParseDriver {
                 return true;
             }
             case HiveParser.KW_AND: {
-
                 // sb.append(StringUtils.repeat(" ", tabLength * FormatDriver.TABSPACE));
                 sb.append(appendbef);
 
@@ -1446,7 +1401,6 @@ public class ParseDriver {
                         // QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength + 1, "", "");
 
                     } else {
-
                         if (((ASTNode) i).getType() == HiveParser.KW_AND || ((ASTNode) i).getType() == HiveParser.KW_OR) {
 
                             if (((ASTNode) i).getType() == HiveParser.KW_OR) {
@@ -1454,11 +1408,9 @@ public class ParseDriver {
                             } else {
                                 QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
                             }
-
                         } else {
                             QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength + 1, "", "");
                         }
-
                     }
 
                     first = false;
@@ -1480,25 +1432,19 @@ public class ParseDriver {
 
                 boolean first = true;
                 for (Node i : c) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, first ? "" : ",", "");
-
                     first = false;
 
                 }
                 sb.append(appendend);
                 return true;
-
             }
             case HiveParser.TOK_PARTITIONINGSPEC: {
-
                 List<Node> c = node.getChildren();
-
                 sb.append(" over( ");
                 int index = 0;
                 for (Node i : c) {
                     // System.out.println(((ASTNode)i).getToken());
-
                     switch (((ASTNode) i).getType()) {
                         case HiveParser.TOK_DISTRIBUTEBY: {
                             sb.append(" partition by ");
@@ -1506,11 +1452,9 @@ public class ParseDriver {
 
                             index = 0;
                             for (Node i0 : c0) {
-
                                 QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength + 1, index == 0 ? " " : ",", "");
                                 index++;
                             }
-
                             break;
                         }
 
@@ -1522,13 +1466,11 @@ public class ParseDriver {
                                 QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength + 1, index == 0 ? " " : ",", "");
                                 index++;
                             }
-
                             break;
                         }
                         default:
                             QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength + 1, "", "");
                     }
-
                 }
                 sb.append(KeywordFormat(")", KeyUpper));
                 return true;
@@ -1543,11 +1485,8 @@ public class ParseDriver {
 
                 boolean first = true;
                 for (Node i : c) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
-
                     first = false;
-
                 }
                 sb.append(appendend);
                 return true;
@@ -1567,11 +1506,8 @@ public class ParseDriver {
 
                 boolean first = true;
                 for (Node i : c) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, first ? "" : ",", "");
-
                     first = false;
-
                 }
                 sb.append(")\n");
                 sb.append(appendend);
@@ -1759,7 +1695,6 @@ public class ParseDriver {
                 List<Node> c = node.getChildren();
                 int index = 0;
                 for (Node i : c) {
-
                     if (index == 1) {
                         sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                         sb.append(KeywordFormat(nowopration, KeyUpper));
@@ -1773,15 +1708,11 @@ public class ParseDriver {
 
                     if (((ASTNode) i).getType() == HiveParser.TOK_LEFTOUTERJOIN
                             || ((ASTNode) i).getType() == HiveParser.TOK_JOIN) {
-
                         QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
                     } else {
-
                         QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength + 1, "", "\n");
                     }
-
                     index++;
-
                 }
                 return true;
             }
@@ -1811,12 +1742,10 @@ public class ParseDriver {
                             // 获取一下当前别名
                             subname = ((ASTNode) i).getText();
                             break;
-
                         }
                         default:
                             QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength + 1, "", "");
                     }
-
                 }
 
                 sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
@@ -1824,7 +1753,7 @@ public class ParseDriver {
                 return true;
             }
 
-            // sub query 例如 x in (select * from a)
+            //子查寻 sub query 例如 x in (select * from a)
             case HiveParser.TOK_SUBQUERY_EXPR: {
                 List<Node> c = node.getChildren();
                 Collections.sort(c, new Comparator<Node>() {
@@ -1838,10 +1767,8 @@ public class ParseDriver {
                             && ((ASTNode) i).getType() != HiveParser.TOK_SUBQUERY_OP) {
                         QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
                     }
-
                 }
                 for (Node i : c) {
-
                     if (((ASTNode) i).getType() == HiveParser.TOK_QUERY) {
                         sb.append("\n");
                         sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
@@ -1859,9 +1786,7 @@ public class ParseDriver {
                         for (Node i0 : c0) {
                             QueryFormat(KeyUpper, (ASTNode) i0, sb, tabLength, "", "");
                         }
-                        continue;
                     }
-
                 }
 
                 return true;
@@ -1877,7 +1802,6 @@ public class ParseDriver {
                 // from 节点包含一些
                 List<Node> xx = new ArrayList<Node>();
                 for (Node i : c) {
-
                     switch (((ASTNode) i).getType()) {
                         case HiveParser.TOK_INSERT: {
                             List<Node> c0 = ((ASTNode) i).getChildren();
@@ -1893,20 +1817,17 @@ public class ParseDriver {
                             xx.add(i);
                     }
                 }
-                Collections.sort(xx, new Comparator<Node>() {
+                xx.sort(new Comparator<Node>() {
                     public int compare(Node o1, Node o2) {
                         return Integer.compare(((ASTNode) o1).getTokenStartIndex(), ((ASTNode) o2).getTokenStartIndex());
                     }
                 });
 
                 for (Node i : xx) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
-
                 }
                 sb.append(appendend);
                 return true;
-
             }
 
             case HiveParser.KW_IN: {
@@ -1916,7 +1837,6 @@ public class ParseDriver {
                 }
                 sb.append(appendbef);
                 sb.append(KeywordFormat(" in ", KeyUpper));
-
                 sb.append(appendend);
                 return true;
 
@@ -1930,11 +1850,8 @@ public class ParseDriver {
                 sb.append(appendbef);
                 sb.append(KeywordFormat(" not ", KeyUpper));
                 List<Node> c = node.getChildren();
-
                 for (Node i : c) {
-
                     QueryFormat(KeyUpper, (ASTNode) i, sb, tabLength, "", "");
-
                 }
                 sb.append(appendend);
                 return true;
@@ -2004,35 +1921,20 @@ public class ParseDriver {
                     }
                     first = false;
                 }
-
                 sb.append(appendend);
                 return true;
             }
-//            case HiveParser.KW_WITH: {
-//                if (sb.charAt(sb.length() - 1) == '\n') {
-//                    // 新行的注意一下
-//                    sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
-//                }
-//                sb.append(appendbef);
-//                sb.append(node.getText());
-//                sb.append(appendend);
-//                return true;
-//            }
+
             default:
-//                sb.append("<QUERY FOMAT TODO:>");
                 sb.append(((ASTNode) node).getToken());
                 sb.append(((ASTNode) node).getText());
                 sb.append("\n");
-
                 return false;
-
         }
 
     }
 
-
     public String getTokenName(ASTNode node) {
-
         String k = node.getText().replaceAll("^TOK", "KW");
         String n = HiveParser.getKeyStr(k);
         if (n != null) {
