@@ -928,7 +928,6 @@ public class ParseDriver {
                     sb.append(StringUtils.repeat(" ", tabLength * ParseDriver.TABSPACE));
                 }
                 sb.append(appendbef);
-
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 boolean isfirst = true;
                 boolean isfirstpar = true;
