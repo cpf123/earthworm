@@ -28,7 +28,7 @@ public class App {
                     }
                 }
                 sqlstring = stringBuilder.toString();
-                System.out.println(sqlstring);
+//                System.out.println(sqlstring);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -42,7 +42,7 @@ public class App {
                 ParseDriver pd = new ParseDriver();
                 if (s.trim().equals("")) {
                 } else if (s.trim().toLowerCase().startsWith("set ")) {
-                    System.out.println(s.trim() + ";\n");
+//                    System.out.println(s.trim() + ";\n");
                 } else {
                     System.out.println(pd.Format(s, new StringBuilder()).toString() + ";\n");
                 }
