@@ -1,5 +1,6 @@
 package com.sql.antlr3.hive.parse;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -8,6 +9,7 @@ public class App {
     public static void main(String[] args) {
 
         String sqlstring = "";
+        HashMap<String, Integer> map = new HashMap<>();
         try {
 //				hsql = new String(Files.readAllBytes(Paths.get(args[0])));
             Scanner in = null;
@@ -42,9 +44,11 @@ public class App {
                 ParseDriver pd = new ParseDriver();
                 if (s.trim().equals("")) {
                 } else if (s.trim().toLowerCase().startsWith("set ")) {
-//                    System.out.println(s.trim() + ";\n");
                 } else {
-                    System.out.println(pd.Format(s, new StringBuilder()).toString() + ";\n");
+                    HashMap<String, Integer>  hashMap = pd.parse(s, map);
+                    for (String a:hashMap.keySet()) {
+                        System.out.println(a+" "+hashMap.get(a));
+                    }
                 }
             }
 
