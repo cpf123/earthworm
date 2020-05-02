@@ -738,22 +738,22 @@ public class ParseDriver {
             case HiveParser.TOK_LEFTOUTERJOIN: {
 
                 if (node.getType() == HiveParser.TOK_FULLOUTERJOIN) {
-//                    ++FULL_OUTER_JOIN_COUNT;
+                    ++FULL_OUTER_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_CROSSJOIN) {
-//                    ++CROSS_JOIN_COUNT;
+                    ++CROSS_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_JOIN) {
-//                    ++JOIN_COUNT;
+                    ++JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_UNIQUEJOIN) {
-//                    ++UNIQUE_JOIN_COUNT;
+                    ++UNIQUE_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_RIGHTOUTERJOIN) {
-//                    ++RIGHT_OUTER_JOIN_COUNT;
+                    ++RIGHT_OUTER_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_LEFTSEMIJOIN) {
-//                    ++LEFT_SEMI_JOIN_COUNT;
+                    ++LEFT_SEMI_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_LEFTOUTERJOIN) {
-//                    ++LEFT_OUTER_JOIN_COUNT;
+                    ++LEFT_OUTER_JOIN_COUNT;
                 }
 
-                List<Node> c = node.getChildren();
+                List<Node> c = node.getChildren(); //// join 子节点
                 int index = 0;
                 for (Node i : c) {
 
@@ -770,7 +770,8 @@ public class ParseDriver {
                         ++JOIN_COUNT;
                         QueryParse(KeyUpper, (ASTNode) i, map);
                     } else {
-                        ++OTHER_JOIN_COUNT;
+                     // join 子节点 : and 或 子查询
+//                        System.out.println(((ASTNode) i).getText()+" "+((ASTNode) i).getType());
                         QueryParse(KeyUpper, (ASTNode) i, map);
                     }
 
