@@ -36,11 +36,11 @@ public class ParseDriver {
     public static int TABLE_COUNT = 0;
     public static int INSERT_OVERWRITE_COUNT = 0;
     public static int TABNAME_COUNT = 0;
-//    public static int SELECT_COUNT = 0; // select 列表
+    public static int SELECT_COUNT = 0; // select 列表
     public static int ROW_NUMBER_COUNT = 0;
     public static int SELECT_COL_COUNT = 0;
     public static int XINGHAO_COUNT = 0;
-    public static int FROM_COUNT = 0;
+    public static int FROM_COUNT = 0;  //?
     public static int SORT_BY_COUNT = 0;
     public static int ORDER_BY_COUNT = 0;
     public static int GROUP_BY_COUNT = 0;
@@ -55,7 +55,9 @@ public class ParseDriver {
     public static int UNIQUE_JOIN_COUNT = 0;
     public static int LEFT_OUTER_JOIN_COUNT = 0;
     public static int SUBQUERY_COUNT = 0;
-    public static int OTHER_JOIN_COUNT = 0;
+    public static int SUBJOIN_COUNT = 0;
+    public static int SUB_LEFT_OUTER_JOIN_COUNT = 0;
+    public static int Aggregate_COUNT = 0;
 
     // 注释节点和输出位置
     public class CommentsWhere {
@@ -279,25 +281,25 @@ public class ParseDriver {
     }
 
 
-
-    public boolean QueryParse(boolean KeyUpper, ASTNode node, HashMap<String, Integer> map) {
+    public boolean QueryParse(ASTNode node, HashMap<String, Integer> map) {
         switch (node.getType()) {
 
-            case HiveParser.TOK_CTE:{
+            case HiveParser.TOK_CTE: {
+                ++WITH_COUNT;
                 List<Node> c1 = ((ASTNode) node).getChildren();
                 for (Node i1 : c1) {
-                    ++WITH_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i1, map);
+                    QueryParse((ASTNode) i1, map);
                 }
                 return true;
             }
 
             // insert into
             case HiveParser.TOK_INSERT_INTO: {
+                ++INSERT_INTO_COUNT;
                 List<Node> c1 = ((ASTNode) node).getChildren();
                 for (Node i1 : c1) {
-                    ++INSERT_INTO_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i1, map);
+
+                    QueryParse((ASTNode) i1, map);
                 }
                 return true;
             }
@@ -305,10 +307,11 @@ public class ParseDriver {
 
             // table
             case HiveParser.TOK_TAB: {
+                ++TABLE_COUNT;
                 List<Node> c1 = ((ASTNode) node).getChildren();
                 for (Node i1 : c1) {
-                    ++TABLE_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i1, map);
+
+                    QueryParse((ASTNode) i1, map);
                 }
                 return true;
             }
@@ -320,10 +323,10 @@ public class ParseDriver {
                 for (Node i1 : c1) {
                     switch (((ASTNode) i1).getType()) {
                         case HiveParser.TOK_TAB: {
+                            ++INSERT_OVERWRITE_COUNT;
                             List<Node> c2 = ((ASTNode) i1).getChildren();
                             for (Node i2 : c2) {
-                                ++INSERT_OVERWRITE_COUNT;
-                                QueryParse(KeyUpper, (ASTNode) i2, map);
+                                QueryParse((ASTNode) i2, map);
                             }
                             break;
                         }
@@ -344,14 +347,14 @@ public class ParseDriver {
                             for (Node i2 : c2) {
                                 switch (((ASTNode) i2).getType()) {
                                     default:
-                                        QueryParse(KeyUpper, (ASTNode) i2, map);
+                                        QueryParse((ASTNode) i2, map);
                                 }
                                 index++;
                             }
                             break;
                         }
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i1, map);
+                            QueryParse((ASTNode) i1, map);
                     }
                 }
                 return true;
@@ -364,18 +367,18 @@ public class ParseDriver {
                 int index = 0;
                 for (Node i : c) {
 
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                     index++;
                 }
                 return true;
             }
             // 表名称
             case HiveParser.TOK_TABNAME: {
-
+                ++TABNAME_COUNT;
 
                 List<Node> c1 = ((ASTNode) node).getChildren();
                 for (Node i1 : c1) {
-                    ++TABNAME_COUNT;
+
                 }
 
                 return true;
@@ -383,30 +386,31 @@ public class ParseDriver {
 
             // select 列表
             case HiveParser.TOK_SELECTDI: {
+                ++SELECT_DISTINCT_COUNT;
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
-                    ++SELECT_DISTINCT_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
             }
             // select 列表
             case HiveParser.TOK_SELECT: {
                 List<Node> c = node.getChildren();
-
+                ++SELECT_COUNT;
                 for (Node i : c) {
-//                    ++SELECT_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
             }
 
             // distinct 的函数
             case HiveParser.TOK_FUNCTIONDI: {
+                ++DISTINCT_COUNT;
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
-                    ++DISTINCT_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i0, map);
+                    QueryParse((ASTNode) i0, map);
                 }
                 return true;
             }
@@ -415,11 +419,21 @@ public class ParseDriver {
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 Node firstnode = c0.get(0);
                 String funcname = ((ASTNode) firstnode).getText().toLowerCase();
+//                System.out.println(funcname);
+                if (funcname.equals("row_number")
+                        || funcname.equals("rank")
+                        || funcname.equals("dense_rank")
+                        || funcname.equals("lead")
+                        || funcname.equals("lag")
+                        || funcname.equals("sum")
+                        || funcname.equals("max")
+                        || funcname.equals("min")
+                        || funcname.equals("avg")
 
-                if (funcname.equals("row_number")) {
+                ) {
+                    ++Aggregate_COUNT;
                     for (Node i0 : c0) {
-                        ++ROW_NUMBER_COUNT;
-                        QueryParse(KeyUpper, (ASTNode) i0, map);
+                        QueryParse((ASTNode) i0, map);
                     }
                 }
                 return true;
@@ -428,16 +442,16 @@ public class ParseDriver {
             // select 下面直接的item
 
             case HiveParser.TOK_TABLE_OR_COL: {
+                ++SELECT_COL_COUNT;
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
-                    ++SELECT_COL_COUNT;
+                    QueryParse((ASTNode) i0, map);
                 }
                 return true;
             }
 
             // select -> TOK_SELEXPR 里面跟着的 a.id 这样的
             case HiveParser.DOT: {
-
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
 
@@ -450,12 +464,11 @@ public class ParseDriver {
                         case HiveParser.TOK_TABLE_OR_COL: {
                             List<Node> c1 = ((ASTNode) i0).getChildren();
                             for (Node i1 : c1) {
-
                             }
                             break;
                         }
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i0, map);
+                            QueryParse((ASTNode) i0, map);
                     }
                 }
                 return true;
@@ -469,18 +482,15 @@ public class ParseDriver {
                 for (Node i : c) {
                     switch (((ASTNode) i).getType()) {
                         case HiveParser.StringLiteral:
-
                             break;
 
                         case HiveParser.Identifier: {
-
                         }
                         break;
 
                         case HiveParser.TOK_TABLE_OR_COL: {
                             List<Node> c0 = ((ASTNode) i).getChildren();
                             for (Node i0 : c0) {
-
 
                             }
                             break;
@@ -497,7 +507,7 @@ public class ParseDriver {
                         }
 
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                     }
                 }
                 return true;
@@ -505,11 +515,12 @@ public class ParseDriver {
 
             // from
             case HiveParser.TOK_FROM: {
-
+                ++FROM_COUNT;//from个数
+//                System.out.println(((ASTNode) node).getText());
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
-                    ++FROM_COUNT;//from个数
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
             }
@@ -518,26 +529,24 @@ public class ParseDriver {
             case HiveParser.TOK_WHERE: {
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
-
             }
 
             case HiveParser.KW_OR: {
-
 
                 List<Node> c = node.getChildren();
                 boolean first = true;
                 for (Node i : c) {
 
                     if (!first) {
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                     } else {
                         if (((ASTNode) i).getType() == HiveParser.KW_AND || ((ASTNode) i).getType() == HiveParser.KW_OR) {
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                         } else {
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                         }
                     }
                     first = false;
@@ -552,19 +561,19 @@ public class ParseDriver {
                     if (!first) {
 
                         if (((ASTNode) i).getType() == HiveParser.KW_OR) {
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                         } else {
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                         }
                     } else {
                         if (((ASTNode) i).getType() == HiveParser.KW_AND || ((ASTNode) i).getType() == HiveParser.KW_OR) {
                             if (((ASTNode) i).getType() == HiveParser.KW_OR) {
-                                QueryParse(KeyUpper, (ASTNode) i, map);
+                                QueryParse((ASTNode) i, map);
                             } else {
-                                QueryParse(KeyUpper, (ASTNode) i, map);
+                                QueryParse((ASTNode) i, map);
                             }
                         } else {
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                         }
                     }
                     first = false;
@@ -575,42 +584,39 @@ public class ParseDriver {
             // row number -----------------------------
             case HiveParser.TOK_SORTBY: {
                 List<Node> c = node.getChildren();
-
+                ++SORT_BY_COUNT;// BY 对应的字段数
                 for (Node i : c) {
-                    ++SORT_BY_COUNT;// BY 对应的字段数
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
 
             }
             case HiveParser.TOK_PARTITIONINGSPEC: {// over partition by
                 List<Node> c = node.getChildren();
-                int index = 0;
+
                 for (Node i : c) {
                     switch (((ASTNode) i).getType()) {
                         case HiveParser.TOK_DISTRIBUTEBY: {
                             List<Node> c0 = ((ASTNode) i).getChildren();
-                            index = 0;
+
                             for (Node i0 : c0) {
-                                QueryParse(KeyUpper, (ASTNode) i0, map);
-                                index++;
+                                QueryParse((ASTNode) i0, map);
+
                             }
                             break;
                         }
 
                         case HiveParser.TOK_ORDERBY: {//order by
-
+                            ++OVER_ORDER_BY_COUNT;
                             List<Node> c0 = ((ASTNode) i).getChildren();
-                            index = 0;
                             for (Node i0 : c0) {
-                                ++OVER_ORDER_BY_COUNT;
-                                QueryParse(KeyUpper, (ASTNode) i0, map);
-                                index++;
+
+                                QueryParse((ASTNode) i0, map);
                             }
                             break;
                         }
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                     }
                 }
                 return true;
@@ -620,7 +626,7 @@ public class ParseDriver {
 
                 boolean first = true;
                 for (Node i : c) {
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                     first = false;
                 }
                 return true;
@@ -632,13 +638,14 @@ public class ParseDriver {
             case HiveParser.KW_REGEXP: {
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
 
             }
             // group by
             case HiveParser.TOK_GROUPBY: {
+                ++GROUP_BY_COUNT;
                 List<Node> c = node.getChildren();
                 for (Node i : c) {
                     switch (((ASTNode) i).getType()) {
@@ -646,12 +653,12 @@ public class ParseDriver {
 
                             List<Node> c0 = ((ASTNode) i).getChildren();
                             for (Node i0 : c0) {
-                                ++GROUP_BY_COUNT;
+
                             }
                             break;
                         }
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                     }
                 }
                 return true;
@@ -664,7 +671,7 @@ public class ParseDriver {
 //
 //                List<Node> c = node.getChildren();
 //                for (Node i : c) {
-//                    QueryParse(KeyUpper, (ASTNode) i, map);
+//                    QueryParse( (ASTNode) i, map);
 //                }
 //                return true;
 //            }
@@ -676,7 +683,7 @@ public class ParseDriver {
 //                List<Node> c = node.getChildren();
 //                int index = 0;
 //                for (Node i : c) {
-//                    QueryParse(KeyUpper, (ASTNode) i, map);
+//                    QueryParse( (ASTNode) i, map);
 //                }
 //
 //                return true;
@@ -687,7 +694,7 @@ public class ParseDriver {
 //                List<Node> c = node.getChildren();
 //                int index = 0;
 //                for (Node i : c) {
-//                    QueryParse(KeyUpper, (ASTNode) i, map);
+//                    QueryParse( (ASTNode) i, map);
 //                }
 //                return true;
 //            }
@@ -697,7 +704,7 @@ public class ParseDriver {
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
                     ++ORDER_BY_COUNT;
-                    QueryParse(KeyUpper, (ASTNode) i0, map);
+                    QueryParse((ASTNode) i0, map);
                 }
                 return true;
             }
@@ -707,7 +714,7 @@ public class ParseDriver {
 
                 List<Node> c0 = ((ASTNode) node).getChildren();
                 for (Node i0 : c0) {
-                    QueryParse(KeyUpper, (ASTNode) i0, map);
+                    QueryParse((ASTNode) i0, map);
                 }
                 return true;
             }
@@ -719,11 +726,11 @@ public class ParseDriver {
                     if (((ASTNode) i).getType() == HiveParser.TOK_UNIONALL) {
                         // 如果是union all 嵌套的 // 不同等级
                         ++LEVELS_UNIONALL;
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                     } else {
                         // 如果是union all 具体的 子query 缩进加1 // 相同等级union all
                         ++LEVEL_UNIONALL;
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                     }
                 }
                 return true;
@@ -742,7 +749,8 @@ public class ParseDriver {
                 } else if (node.getType() == HiveParser.TOK_CROSSJOIN) {
                     ++CROSS_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_JOIN) {
-                    ++JOIN_COUNT;
+                    ++JOIN_COUNT; // join cell 的遍历 非关键字join个数
+//                    System.out.println(((ASTNode) node).getText() + " " + JOIN_COUNT);
                 } else if (node.getType() == HiveParser.TOK_UNIQUEJOIN) {
                     ++UNIQUE_JOIN_COUNT;
                 } else if (node.getType() == HiveParser.TOK_RIGHTOUTERJOIN) {
@@ -755,8 +763,9 @@ public class ParseDriver {
 
                 List<Node> c = node.getChildren(); //// join 子节点
                 int index = 0;
+//                System.out.println(((ASTNode) node).getText()+" "+c.size());
                 for (Node i : c) {
-
+                    System.out.println(((ASTNode) node).getText() + " " + ((ASTNode) i).getText() + " " + ((ASTNode) i).getType());
                     if (index == 1) {
                         //join 关键字
                     }
@@ -764,26 +773,24 @@ public class ParseDriver {
                         // on 关键字
                     }
                     if (((ASTNode) i).getType() == HiveParser.TOK_LEFTOUTERJOIN) {
-                        ++LEFT_OUTER_JOIN_COUNT;
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        ++SUB_LEFT_OUTER_JOIN_COUNT;
+                        QueryParse((ASTNode) i, map);
                     } else if (((ASTNode) i).getType() == HiveParser.TOK_JOIN) {
-                        ++JOIN_COUNT;
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        ++SUBJOIN_COUNT;
+                        System.out.println("zijiedian " + ((ASTNode) i).getText());
+                        QueryParse((ASTNode) i, map);
                     } else {
-                     // join 子节点 : and 或 子查询
+                        // join 子节点 : and 或 子查询
 //                        System.out.println(((ASTNode) i).getText()+" "+((ASTNode) i).getType());
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                     }
-
                     index++;
-
                 }
                 return true;
             }
 
             // 子查询
             case HiveParser.TOK_SUBQUERY: {
-
                 List<Node> c = node.getChildren();
                 Collections.sort(c, new Comparator<Node>() {
                     public int compare(Node o1, Node o2) {
@@ -798,7 +805,7 @@ public class ParseDriver {
                         // 里面的具体query
                         case HiveParser.TOK_QUERY: {
                             ++SUBQUERY_COUNT;
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                             break;
                         }
                         // 最后一个别名
@@ -808,7 +815,7 @@ public class ParseDriver {
                             break;
                         }
                         default:
-                            QueryParse(KeyUpper, (ASTNode) i, map);
+                            QueryParse((ASTNode) i, map);
                     }
                 }
                 return true;
@@ -825,19 +832,19 @@ public class ParseDriver {
 
                 for (Node i : c) {
                     if (((ASTNode) i).getType() != HiveParser.TOK_QUERY && ((ASTNode) i).getType() != HiveParser.TOK_SUBQUERY_OP) {
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                     }
                 }
                 for (Node i : c) {
                     if (((ASTNode) i).getType() == HiveParser.TOK_QUERY) {
-                        QueryParse(KeyUpper, (ASTNode) i, map);
+                        QueryParse((ASTNode) i, map);
                         continue;
                     }
 
                     if (((ASTNode) i).getType() == HiveParser.TOK_SUBQUERY_OP) {
                         List<Node> c0 = ((ASTNode) i).getChildren();
                         for (Node i0 : c0) {
-                            QueryParse(KeyUpper, (ASTNode) i0, map);
+                            QueryParse((ASTNode) i0, map);
                         }
                     }
 
@@ -877,7 +884,7 @@ public class ParseDriver {
                 });
 
                 for (Node i : xx) {
-                    QueryParse(KeyUpper, (ASTNode) i, map);
+                    QueryParse((ASTNode) i, map);
                 }
                 return true;
 
@@ -892,7 +899,7 @@ public class ParseDriver {
 //                // not 关键字
 //                List<Node> c = node.getChildren();
 //                for (Node i : c) {
-//                    QueryParse(KeyUpper, (ASTNode) i, map);
+//                    QueryParse( (ASTNode) i, map);
 //                }
 //                return true;
 //            }
@@ -937,7 +944,7 @@ public class ParseDriver {
             if (vistmap.get(next) == null) {
 
                 if (next.getType() == HiveParser.TOK_QUERY) {
-                    QueryParse(true, next, map);
+                    QueryParse(next, map);
                 }
 
                 if (next.getChildCount() > 0) {
@@ -959,7 +966,7 @@ public class ParseDriver {
         map.put("TABLE_COUNT", TABLE_COUNT);
         map.put("INSERT_OVERWRITE_COUNT", INSERT_OVERWRITE_COUNT);
         map.put("TABNAME_COUNT", TABNAME_COUNT);
-//        map.put("SELECT_COUNT", SELECT_COUNT);
+        map.put("SELECT_COUNT", SELECT_COUNT);
         map.put("ROW_NUMBER_COUNT", ROW_NUMBER_COUNT);
         map.put("SELECT_COL_COUNT", SELECT_COL_COUNT);
         map.put("XINGHAO_COUNT", XINGHAO_COUNT);
@@ -970,15 +977,24 @@ public class ParseDriver {
         map.put("OVER_ORDER_BY_COUNT", OVER_ORDER_BY_COUNT);
         map.put("LEVELS_UNIONALL", LEVELS_UNIONALL);
         map.put("LEVEL_UNIONALL", LEVEL_UNIONALL);
-        map.put("JOIN_COUNT", JOIN_COUNT);
-        map.put("CROSS_JOIN_COUNT", CROSS_JOIN_COUNT);
-        map.put("FULL_OUTER_JOIN_COUNT", FULL_OUTER_JOIN_COUNT);
-        map.put("LEFT_SEMI_JOIN_COUNT", LEFT_SEMI_JOIN_COUNT);
-        map.put("RIGHT_OUTER_JOIN_COUNT", RIGHT_OUTER_JOIN_COUNT);
-        map.put("UNIQUE_JOIN_COUNT", UNIQUE_JOIN_COUNT);
-        map.put("LEFT_OUTER_JOIN_COUNT", LEFT_OUTER_JOIN_COUNT);
+        // join 涉及到 a join b => /2
+        map.put("JOIN_COUNT", (JOIN_COUNT));
+
+        if (SUBJOIN_COUNT > 0) {
+//                    不同级
+            map.put("JOIN_COUNT", (JOIN_COUNT - SUBJOIN_COUNT + 1) / 2);
+        } else {
+//        同级
+            map.put("JOIN_COUNT", JOIN_COUNT / 2);
+        }
+//        map.put("CROSS_JOIN_COUNT", CROSS_JOIN_COUNT / 2);
+//        map.put("FULL_OUTER_JOIN_COUNT", FULL_OUTER_JOIN_COUNT / 2);
+//        map.put("LEFT_SEMI_JOIN_COUNT", LEFT_SEMI_JOIN_COUNT / 2);
+        map.put("RIGHT_OUTER_JOIN_COUNT", RIGHT_OUTER_JOIN_COUNT / 2);
+//        map.put("UNIQUE_JOIN_COUNT", UNIQUE_JOIN_COUNT / 2);
+        map.put("LEFT_OUTER_JOIN_COUNT", LEFT_OUTER_JOIN_COUNT / 2);
         map.put("SUBQUERY_COUNT", SUBQUERY_COUNT);
-        map.put("OTHER_JOIN_COUNT", OTHER_JOIN_COUNT);
+        map.put("SUB_LEFT_OUTER_JOIN_COUNT", SUB_LEFT_OUTER_JOIN_COUNT);
         return map;
     }
 
