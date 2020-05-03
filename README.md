@@ -1,4 +1,6 @@
 # earthworm
+场景分析：常规调取数据框架有spark hive impala 针对spark内存计算快 资源有限，hive 计算稳定时间长等特点；以及sql写错繁复启动yarn资源的浪费
+
 借助earthworm 中间件 实现语法预解析和初步sql性能分析，最后执行sql组件选型。
 (图片需要翻墙才能显示)
 
