@@ -69,9 +69,7 @@ public class App {
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             System.exit(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
     }
