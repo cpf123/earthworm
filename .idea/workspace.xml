@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e71bbeb-a150-4a57-b4b4-240e606d0a48" name="Default Changelist" comment="格式化子查询">
-      <change afterPath="$PROJECT_DIR$/target/classes/META-INF/earthworm.kotlin_module" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/FactDimEnum.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/Stage.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/properties/Param.class" afterDir="false" />
+    <list default="true" id="7e71bbeb-a150-4a57-b4b4-240e606d0a48" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FactDim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FuncAnalysis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Runon_line.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/DimTables.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/FactTables.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FactDimEnum.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Stage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Stage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Stage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/Param.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/Param.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/earthworm.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/FactDimEnum.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$6.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$ANTLRNoCaseStringStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$ANTLRNoCaseStringStream.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$CommentsWhere.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$CommentsWhere.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$HiveLexerX.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$HiveLexerX.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$TreeAdaptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver$TreeAdaptor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/ParseDriver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/Stage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/properties/Param.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/properties/Param.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +48,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="IgnoredFileRootStore">
     <option name="generatedRoots">
@@ -145,7 +154,8 @@
       <updated>1588252219575</updated>
       <workItem from="1588252224016" duration="2620000" />
       <workItem from="1588255130671" duration="34967000" />
-      <workItem from="1588346341032" duration="28781000" />
+      <workItem from="1588346341032" duration="63161000" />
+      <workItem from="1588443691905" duration="28358000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1588253779287</created>
@@ -196,7 +206,35 @@
       <option name="project" value="LOCAL" />
       <updated>1588349051379</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="SQL State analysis">
+      <created>1588375501361</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1588375501361</updated>
+    </task>
+    <task id="LOCAL-00009" summary="SQL State analysis">
+      <created>1588407141417</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1588407141417</updated>
+    </task>
+    <task id="LOCAL-00010" summary="SQL State analysis">
+      <created>1588407987959</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1588407987959</updated>
+    </task>
+    <task id="LOCAL-00011" summary="SQL State analysis">
+      <created>1588424971973</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1588424971973</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,7 +247,8 @@
     <MESSAGE value="PARSE" />
     <MESSAGE value="流程图" />
     <MESSAGE value="格式化子查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="格式化子查询" />
+    <MESSAGE value="SQL State analysis" />
+    <option name="LAST_COMMIT_MESSAGE" value="SQL State analysis" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="115" key="#Project_Structure" timestamp="1588326841053">
@@ -220,58 +259,62 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="533" y="166" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1588363457957" />
-    <state x="314" y="52" key="CommitChangelistDialog2" timestamp="1588366970519">
+    <state x="314" y="52" key="CommitChangelistDialog2" timestamp="1588424971616">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="314" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588366970519" />
-    <state width="1398" height="241" key="GridCell.Tab.0.bottom" timestamp="1588367003158">
+    <state x="314" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588424971616" />
+    <state width="1398" height="267" key="GridCell.Tab.0.bottom" timestamp="1588503180574">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="241" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588367003158" />
-    <state width="1398" height="223" key="GridCell.Tab.0.bottom/0.23.1394.877@0.23.1394.877" timestamp="1588314090751" />
-    <state width="1398" height="241" key="GridCell.Tab.0.bottom/0.23.1396.877@0.23.1396.877" timestamp="1588366215665" />
-    <state width="1398" height="241" key="GridCell.Tab.0.center" timestamp="1588367003156">
+    <state width="1398" height="267" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588503180574" />
+    <state width="1398" height="262" key="GridCell.Tab.0.bottom/0.23.1394.877@0.23.1394.877" timestamp="1588451151458" />
+    <state width="1398" height="193" key="GridCell.Tab.0.bottom/0.23.1396.877@0.23.1396.877" timestamp="1588433111773" />
+    <state width="1398" height="267" key="GridCell.Tab.0.center" timestamp="1588503180571">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="241" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588367003156" />
-    <state width="1398" height="223" key="GridCell.Tab.0.center/0.23.1394.877@0.23.1394.877" timestamp="1588314090747" />
-    <state width="1398" height="241" key="GridCell.Tab.0.center/0.23.1396.877@0.23.1396.877" timestamp="1588366215662" />
-    <state width="1398" height="241" key="GridCell.Tab.0.left" timestamp="1588367003151">
+    <state width="1398" height="267" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588503180571" />
+    <state width="1398" height="262" key="GridCell.Tab.0.center/0.23.1394.877@0.23.1394.877" timestamp="1588451151455" />
+    <state width="1398" height="193" key="GridCell.Tab.0.center/0.23.1396.877@0.23.1396.877" timestamp="1588433111771" />
+    <state width="1398" height="267" key="GridCell.Tab.0.left" timestamp="1588503180568">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="241" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588367003151" />
-    <state width="1398" height="223" key="GridCell.Tab.0.left/0.23.1394.877@0.23.1394.877" timestamp="1588314090746" />
-    <state width="1398" height="241" key="GridCell.Tab.0.left/0.23.1396.877@0.23.1396.877" timestamp="1588366215661" />
-    <state width="1398" height="241" key="GridCell.Tab.0.right" timestamp="1588367003157">
+    <state width="1398" height="267" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588503180568" />
+    <state width="1398" height="262" key="GridCell.Tab.0.left/0.23.1394.877@0.23.1394.877" timestamp="1588451151454" />
+    <state width="1398" height="193" key="GridCell.Tab.0.left/0.23.1396.877@0.23.1396.877" timestamp="1588433111769" />
+    <state width="1398" height="267" key="GridCell.Tab.0.right" timestamp="1588503180573">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="241" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588367003157" />
-    <state width="1398" height="223" key="GridCell.Tab.0.right/0.23.1394.877@0.23.1394.877" timestamp="1588314090749" />
-    <state width="1398" height="241" key="GridCell.Tab.0.right/0.23.1396.877@0.23.1396.877" timestamp="1588366215664" />
-    <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1588356763345">
+    <state width="1398" height="267" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588503180573" />
+    <state width="1398" height="262" key="GridCell.Tab.0.right/0.23.1394.877@0.23.1394.877" timestamp="1588451151456" />
+    <state width="1398" height="193" key="GridCell.Tab.0.right/0.23.1396.877@0.23.1396.877" timestamp="1588433111772" />
+    <state width="1398" height="262" key="GridCell.Tab.1.bottom" timestamp="1588493751830">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588356763345" />
-    <state width="1398" height="304" key="GridCell.Tab.1.center" timestamp="1588356763343">
+    <state width="1398" height="262" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588493751830" />
+    <state width="1398" height="262" key="GridCell.Tab.1.bottom/0.23.1394.877@0.23.1394.877" timestamp="1588451151465" />
+    <state width="1398" height="262" key="GridCell.Tab.1.center" timestamp="1588493751829">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1588356763343" />
-    <state width="1398" height="304" key="GridCell.Tab.1.left" timestamp="1588356763342">
+    <state width="1398" height="262" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1588493751829" />
+    <state width="1398" height="262" key="GridCell.Tab.1.center/0.23.1394.877@0.23.1394.877" timestamp="1588451151460" />
+    <state width="1398" height="262" key="GridCell.Tab.1.left" timestamp="1588493751828">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1588356763342" />
-    <state width="1398" height="304" key="GridCell.Tab.1.right" timestamp="1588356763344">
+    <state width="1398" height="262" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1588493751828" />
+    <state width="1398" height="262" key="GridCell.Tab.1.left/0.23.1394.877@0.23.1394.877" timestamp="1588451151459" />
+    <state width="1398" height="262" key="GridCell.Tab.1.right" timestamp="1588493751830">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1588356763344" />
+    <state width="1398" height="262" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1588493751830" />
+    <state width="1398" height="262" key="GridCell.Tab.1.right/0.23.1394.877@0.23.1394.877" timestamp="1588451151463" />
     <state x="433" y="173" key="MultipleFileMergeDialog" timestamp="1588341757666">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="433" y="173" key="MultipleFileMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1588341757666" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1588349054496">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1588424973240">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588349054496" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588424973240" />
     <state x="458" y="224" key="extract.method.dialog" timestamp="1588367170165">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -280,6 +323,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="386" y="207" width="816" height="550" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1588368595334" />
+    <state x="385" y="210" key="run.anything.popup" timestamp="1588497135486">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="210" key="run.anything.popup/0.0.1440.900@0.0.1440.900" timestamp="1588497135486" />
     <state x="385" y="196" key="search.everywhere.popup" timestamp="1588370297476">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -289,19 +336,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java</url>
-          <line>9</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java</url>
+          <line>292</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java</url>
-          <line>871</line>
-          <option name="timeStamp" value="13" />
+          <line>984</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
