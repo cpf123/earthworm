@@ -1,4 +1,5 @@
 # earthworm
+借助earthworm 中间件 实现语法预解析和初步sql性能分析，最后执行sql组件选型。
 (图片需要翻墙才能显示)
 
 <img src="https://github.com/cpf123/earthworm/blob/master/img/WX20200501-221607%402x.png" width = "400" height = "400" alt="" align=center />
