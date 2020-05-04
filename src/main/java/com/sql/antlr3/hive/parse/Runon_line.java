@@ -19,7 +19,6 @@ public class Runon_line {
     }
 
 //    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
-
     public void runon_impala(String sqlstring) throws IOException, InterruptedException {
         String impalasql = "impala-shell -q \"\n"
                 + sqlstring
