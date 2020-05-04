@@ -34,7 +34,7 @@ public class App {
                     }
                 }
                 sqlstring = stringBuilder.toString();
-                System.out.println(sqlstring);
+//                System.out.println(sqlstring);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,12 +56,8 @@ public class App {
                         System.out.println(a + " " + hashMap.get(a));
                     }
 
-                    float funcanalysis = new FuncAnalysis().funcanalysis(hashMap);
-                    if (funcanalysis > 0.5) {
-                        new Runon_line().runon_line_hive(sqlstring);
-                    } else {
-                        new Runon_line().runon_line_spark(sqlstring);
-                    }
+                    new FuncAnalysis().funcanalysis(hashMap, sqlstring);
+
 
                 }
             }

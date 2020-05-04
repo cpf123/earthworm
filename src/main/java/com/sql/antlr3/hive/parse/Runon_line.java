@@ -2,33 +2,72 @@ package com.sql.antlr3.hive.parse;
 
 import jodd.io.StreamGobbler;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
 public class Runon_line {
-    public void runon_line_hive(String sqlstring) throws IOException, InterruptedException {
-        String hivesql = "hive -e \"" + sqlstring + "\"";
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("sh", "-c", hivesql);
-        Process process = processBuilder.start();
-        StreamGobbler streamGobbler =
-                new StreamGobbler(process.getInputStream(), "STDOUT");
-        Executors.newSingleThreadExecutor().submit(streamGobbler);
-        int exitCode = process.waitFor();
-        assert exitCode == 0;
+
+
+    public void exec(String exec) {
+        try {
+
+            ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", exec);
+
+            pb.redirectErrorStream(true);
+            /**
+             * 方法告诉此进程生成器是否合并标准错误和标准输出。如果此属性为true，则通过子进程所产生的任何错误输出随后由该对象的start()方法启动将与标准输出合并，
+             * 这样既可以用Process.getInputStream()方法来读取。此使得更容易与对应的输出相关的错误消息。
+             * 初始值是false
+             */
+            Process ps = pb.start();
+
+            InputStream is = ps.getErrorStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.err.println(line);
+            }
+
+            InputStream is1 = ps.getInputStream();
+            BufferedReader br1 = new BufferedReader(new InputStreamReader(is1));
+
+            String line1;
+            while ((line1 = br1.readLine()) != null) {
+                System.out.println(line1);
+            }
+
+            int exitCode = ps.waitFor();
+            System.out.println(exitCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void runon_line_spark(String sqlstring) throws IOException, InterruptedException {
-        String hivesql = "spark-sql -e \"" + sqlstring + "\"";
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command("sh", "-c", hivesql);
-        Process process = processBuilder.start();
-        StreamGobbler streamGobbler =
-                new StreamGobbler(process.getInputStream(), "STDOUT");
-        Executors.newSingleThreadExecutor().submit(streamGobbler);
-        int exitCode = process.waitFor();
-        assert exitCode == 0;
+    public void runon_hive(String sqlstring) throws IOException, InterruptedException {
+        String hivesql = "hive -e \"\n"
+                + sqlstring
+                + "\"";
+        exec(hivesql);
     }
 
+    public void runon_spark(String sqlstring) {
+        String sparksql = "spark-sql -e \"\n"
+                + sqlstring
+                + "\"";
+        exec(sparksql);
+    }
+
+//    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
+
+    public void runon_impala(String sqlstring) throws IOException, InterruptedException {
+        String impalasql = "impala-shell -q \"\n"
+                + sqlstring
+                + "\"";
+        exec(impalasql);
+    }
 }
 

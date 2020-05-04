@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e71bbeb-a150-4a57-b4b4-240e606d0a48" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FactDim.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FuncAnalysis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Runon_line.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/DimTables.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/FactTables.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FactDimEnum.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/ParseDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Stage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/Param.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/properties/Param.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FuncAnalysis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/FuncAnalysis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Runon_line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sql/antlr3/hive/parse/Runon_line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/META-INF/earthworm.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/App.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/sql/antlr3/hive/parse/FactDimEnum.class" beforeDir="false" />
@@ -155,7 +148,8 @@
       <workItem from="1588252224016" duration="2620000" />
       <workItem from="1588255130671" duration="34967000" />
       <workItem from="1588346341032" duration="63161000" />
-      <workItem from="1588443691905" duration="28358000" />
+      <workItem from="1588443691905" duration="29783000" />
+      <workItem from="1588580293114" duration="12140000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1588253779287</created>
@@ -234,7 +228,28 @@
       <option name="project" value="LOCAL" />
       <updated>1588424971973</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="end">
+      <created>1588506507664</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1588506507664</updated>
+    </task>
+    <task id="LOCAL-00013" summary="end">
+      <created>1588506839082</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1588506839082</updated>
+    </task>
+    <task id="LOCAL-00014" summary="end">
+      <created>1588583482959</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1588583482959</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +263,8 @@
     <MESSAGE value="流程图" />
     <MESSAGE value="格式化子查询" />
     <MESSAGE value="SQL State analysis" />
-    <option name="LAST_COMMIT_MESSAGE" value="SQL State analysis" />
+    <MESSAGE value="end" />
+    <option name="LAST_COMMIT_MESSAGE" value="end" />
   </component>
   <component name="WindowStateProjectService">
     <state x="320" y="115" key="#Project_Structure" timestamp="1588326841053">
@@ -259,70 +275,74 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="533" y="166" key="#com.intellij.ide.util.MemberChooser/0.0.1440.900@0.0.1440.900" timestamp="1588363457957" />
-    <state x="314" y="52" key="CommitChangelistDialog2" timestamp="1588424971616">
+    <state x="314" y="52" key="CommitChangelistDialog2" timestamp="1588583482793">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="314" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588424971616" />
-    <state width="1398" height="267" key="GridCell.Tab.0.bottom" timestamp="1588503180574">
+    <state x="314" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1588583482793" />
+    <state width="1398" height="218" key="GridCell.Tab.0.bottom" timestamp="1588593929978">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="267" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588503180574" />
+    <state width="1398" height="218" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588593929978" />
     <state width="1398" height="262" key="GridCell.Tab.0.bottom/0.23.1394.877@0.23.1394.877" timestamp="1588451151458" />
     <state width="1398" height="193" key="GridCell.Tab.0.bottom/0.23.1396.877@0.23.1396.877" timestamp="1588433111773" />
-    <state width="1398" height="267" key="GridCell.Tab.0.center" timestamp="1588503180571">
+    <state width="1398" height="218" key="GridCell.Tab.0.center" timestamp="1588593929975">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="267" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588503180571" />
+    <state width="1398" height="218" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1588593929975" />
     <state width="1398" height="262" key="GridCell.Tab.0.center/0.23.1394.877@0.23.1394.877" timestamp="1588451151455" />
     <state width="1398" height="193" key="GridCell.Tab.0.center/0.23.1396.877@0.23.1396.877" timestamp="1588433111771" />
-    <state width="1398" height="267" key="GridCell.Tab.0.left" timestamp="1588503180568">
+    <state width="1398" height="218" key="GridCell.Tab.0.left" timestamp="1588593929974">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="267" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588503180568" />
+    <state width="1398" height="218" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1588593929974" />
     <state width="1398" height="262" key="GridCell.Tab.0.left/0.23.1394.877@0.23.1394.877" timestamp="1588451151454" />
     <state width="1398" height="193" key="GridCell.Tab.0.left/0.23.1396.877@0.23.1396.877" timestamp="1588433111769" />
-    <state width="1398" height="267" key="GridCell.Tab.0.right" timestamp="1588503180573">
+    <state width="1398" height="218" key="GridCell.Tab.0.right" timestamp="1588593929977">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="267" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588503180573" />
+    <state width="1398" height="218" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1588593929977" />
     <state width="1398" height="262" key="GridCell.Tab.0.right/0.23.1394.877@0.23.1394.877" timestamp="1588451151456" />
     <state width="1398" height="193" key="GridCell.Tab.0.right/0.23.1396.877@0.23.1396.877" timestamp="1588433111772" />
-    <state width="1398" height="262" key="GridCell.Tab.1.bottom" timestamp="1588493751830">
+    <state width="1398" height="262" key="GridCell.Tab.1.bottom" timestamp="1588574841789">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="262" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588493751830" />
+    <state width="1398" height="262" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1588574841789" />
     <state width="1398" height="262" key="GridCell.Tab.1.bottom/0.23.1394.877@0.23.1394.877" timestamp="1588451151465" />
-    <state width="1398" height="262" key="GridCell.Tab.1.center" timestamp="1588493751829">
+    <state width="1398" height="262" key="GridCell.Tab.1.center" timestamp="1588574841788">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="262" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1588493751829" />
+    <state width="1398" height="262" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1588574841788" />
     <state width="1398" height="262" key="GridCell.Tab.1.center/0.23.1394.877@0.23.1394.877" timestamp="1588451151460" />
-    <state width="1398" height="262" key="GridCell.Tab.1.left" timestamp="1588493751828">
+    <state width="1398" height="262" key="GridCell.Tab.1.left" timestamp="1588574841788">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="262" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1588493751828" />
+    <state width="1398" height="262" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1588574841788" />
     <state width="1398" height="262" key="GridCell.Tab.1.left/0.23.1394.877@0.23.1394.877" timestamp="1588451151459" />
-    <state width="1398" height="262" key="GridCell.Tab.1.right" timestamp="1588493751830">
+    <state width="1398" height="262" key="GridCell.Tab.1.right" timestamp="1588574841788">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="262" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1588493751830" />
+    <state width="1398" height="262" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1588574841788" />
     <state width="1398" height="262" key="GridCell.Tab.1.right/0.23.1394.877@0.23.1394.877" timestamp="1588451151463" />
     <state x="433" y="173" key="MultipleFileMergeDialog" timestamp="1588341757666">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="433" y="173" key="MultipleFileMergeDialog/0.0.1440.900@0.0.1440.900" timestamp="1588341757666" />
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1588424973240">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1588583484339">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588424973240" />
-    <state x="458" y="224" key="extract.method.dialog" timestamp="1588367170165">
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1588583484339" />
+    <state x="458" y="224" key="extract.method.dialog" timestamp="1588586258060">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="458" y="224" key="extract.method.dialog/0.0.1440.900@0.0.1440.900" timestamp="1588367170165" />
+    <state x="458" y="224" key="extract.method.dialog/0.0.1440.900@0.0.1440.900" timestamp="1588586258060" />
     <state x="386" y="207" width="816" height="550" key="find.popup" timestamp="1588368595334">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="386" y="207" width="816" height="550" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1588368595334" />
+    <state x="434" y="248" key="git4idea.merge.GitPullDialog" timestamp="1588583365780">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="434" y="248" key="git4idea.merge.GitPullDialog/0.0.1440.900@0.0.1440.900" timestamp="1588583365780" />
     <state x="385" y="210" key="run.anything.popup" timestamp="1588497135486">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
