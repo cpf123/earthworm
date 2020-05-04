@@ -3,6 +3,7 @@
 
 借助earthworm 中间件 实现语法预解析和初步sql性能分析，最后执行sql组件选型。
 sql 选型：
+
 io 密集型
 事实表 join  DoubleFact
 表数量多     TABNAME_COUNT
