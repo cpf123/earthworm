@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Runon_line {
 
-    public void runon_hive(String sqlstring) throws IOException, InterruptedException {
+    public void runon_hive(String sqlstring) {
         String hivesql = "hive -e \"\n"
                 + sqlstring
                 + "\"";
@@ -18,8 +18,8 @@ public class Runon_line {
         exec(sparksql);
     }
 
-//    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
-    public void runon_impala(String sqlstring) throws IOException, InterruptedException {
+    //    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
+    public void runon_impala(String sqlstring) {
         String impalasql = "impala-shell -q \"\n"
                 + sqlstring
                 + "\"";
