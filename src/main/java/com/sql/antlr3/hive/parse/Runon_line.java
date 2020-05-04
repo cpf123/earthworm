@@ -1,19 +1,34 @@
 package com.sql.antlr3.hive.parse;
 
-import jodd.io.StreamGobbler;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
 
 public class Runon_line {
 
+    public void runon_hive(String sqlstring) throws IOException, InterruptedException {
+        String hivesql = "hive -e \"\n"
+                + sqlstring
+                + "\"";
+        exec(hivesql);
+    }
+
+    public void runon_spark(String sqlstring) {
+        String sparksql = "spark-sql -e \"\n"
+                + sqlstring
+                + "\"";
+        exec(sparksql);
+    }
+
+//    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
+
+    public void runon_impala(String sqlstring) throws IOException, InterruptedException {
+        String impalasql = "impala-shell -q \"\n"
+                + sqlstring
+                + "\"";
+        exec(impalasql);
+    }
 
     public void exec(String exec) {
         try {
-
             ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", exec);
 
             pb.redirectErrorStream(true);
@@ -45,29 +60,6 @@ public class Runon_line {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void runon_hive(String sqlstring) throws IOException, InterruptedException {
-        String hivesql = "hive -e \"\n"
-                + sqlstring
-                + "\"";
-        exec(hivesql);
-    }
-
-    public void runon_spark(String sqlstring) {
-        String sparksql = "spark-sql -e \"\n"
-                + sqlstring
-                + "\"";
-        exec(sparksql);
-    }
-
-//    impala-shell -i 100.106.35.7:21000 -u impala_ploan -B -q "invalidate metadata dw_ads.ads_fox_org_daily_detail;"
-
-    public void runon_impala(String sqlstring) throws IOException, InterruptedException {
-        String impalasql = "impala-shell -q \"\n"
-                + sqlstring
-                + "\"";
-        exec(impalasql);
     }
 }
 
