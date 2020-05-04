@@ -20,4 +20,4 @@ cpu 密集型:
 
 通过antlr3插件 解析相应配置文件 XX.g 生成HiveLexer、HiveParser、XX.tokens、XX*Parser
 
-<img src="https://gitee.com/bloomberg/img/blob/master/WX20200430-214912@2x.png" width = "300" height = "300" alt="" align=center />
+<img src="https://github.com/cpf123/earthworm/blob/master/img/WX20200430-214912@2x.png" width = "300" height = "300" alt="" align=center />
