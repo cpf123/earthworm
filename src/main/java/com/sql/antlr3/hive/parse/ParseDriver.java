@@ -1228,15 +1228,4 @@ public class ParseDriver {
         map.put(Param.DoubleFact.value(), DoubleFact);
         return map;
     }
-
-    public String getTokenName(ASTNode node) {
-
-        String k = node.getText().replaceAll("^TOK", "KW");
-        String n = HiveParser.getKeyStr(k);
-        if (n != null) {
-            return n;
-        }
-        return node.getText();
-
-    }
 }
