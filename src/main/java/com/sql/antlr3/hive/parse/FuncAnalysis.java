@@ -37,10 +37,8 @@ public class FuncAnalysis {
 
         if (funcanalysis > 0.5 && DoubleFact > 2 && TABNAME_COUNT > 5) {
             new Runon_line().runon_hive(sqlstring);
-            System.out.println(sqlstring);
             System.out.println(funcanalysis);
         } else if (funcanalysis < 0.5 && Aggregate_COUNT > 5 && SUBQUERY_COUNT > 8) {
-            System.out.println(sqlstring);
             new Runon_line().runon_spark(sqlstring);
             System.out.println(funcanalysis);
         } else {

@@ -55,9 +55,7 @@ public class App {
                     for (String a : hashMap.keySet()) {
                         System.out.println(a + " " + hashMap.get(a));
                     }
-
                     new FuncAnalysis().funcanalysis(hashMap, sqlstring);
-
 
                 }
             }
