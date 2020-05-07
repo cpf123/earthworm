@@ -1114,7 +1114,7 @@ public class ParseDriver {
                     QueryParse(next, map, tmpmap, sb);
                     int DoubleFact = new FactDim().DoubleFact(sb);
                     map.put(Param.DoubleFact.value(), DoubleFact);
-//                    System.out.println(sb.toString());
+                    System.out.println(sb.toString());
                     return map;
                 }
 
