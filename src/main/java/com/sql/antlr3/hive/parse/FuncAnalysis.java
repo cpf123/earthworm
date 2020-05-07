@@ -20,7 +20,7 @@ public class FuncAnalysis {
      * @param sqlstring
      * @return
      */
-    public void funcanalysis(HashMap<String, Integer> hashMap, String sqlstring) throws IOException, InterruptedException {
+    public void funcanalysis(HashMap<String, Integer> hashMap, String sqlstring) {
 //        sqlstring = sqlstring + ";";
         Integer DoubleFact = hashMap.getOrDefault(Param.DoubleFact.value(), 0);
         Integer TABNAME_COUNT = hashMap.getOrDefault(Param.TABNAME_COUNT.value(), 0);
