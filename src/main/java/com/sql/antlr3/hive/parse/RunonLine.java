@@ -2,7 +2,7 @@ package com.sql.antlr3.hive.parse;
 
 import java.io.*;
 
-public class Runon_line {
+public class RunonLine {
 
     public void runon_hive(String sqlstring) {
         String hivesql = "hive -e \"\n"

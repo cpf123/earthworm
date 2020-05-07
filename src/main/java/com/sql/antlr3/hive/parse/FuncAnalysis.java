@@ -2,7 +2,6 @@ package com.sql.antlr3.hive.parse;
 
 import com.sql.antlr3.hive.properties.Param;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class FuncAnalysis {
@@ -36,13 +35,13 @@ public class FuncAnalysis {
         float funcanalysis = IODense / (IODense + CPUDense);
 
         if (funcanalysis > 0.5 && DoubleFact > 2 && TABNAME_COUNT > 5) {
-            new Runon_line().runon_hive(sqlstring);
+            new RunonLine().runon_hive(sqlstring);
             System.out.println(funcanalysis);
         } else if (funcanalysis < 0.5 && Aggregate_COUNT > 5 && SUBQUERY_COUNT > 8) {
-            new Runon_line().runon_spark(sqlstring);
+            new RunonLine().runon_spark(sqlstring);
             System.out.println(funcanalysis);
         } else {
-            new Runon_line().runon_impala(sqlstring);
+            new RunonLine().runon_impala(sqlstring);
         }
 
 // test
