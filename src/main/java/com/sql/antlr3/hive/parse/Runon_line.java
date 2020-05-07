@@ -53,9 +53,9 @@ public class Runon_line {
             while ((line1 = br1.readLine()) != null) {
                 System.out.println(line1);
             }
+           //等待子进程完成再往下执行
+            ps.waitFor();
 
-            int exitCode = ps.waitFor();
-            System.out.println(exitCode);
         } catch (Exception e) {
             e.printStackTrace();
         }
