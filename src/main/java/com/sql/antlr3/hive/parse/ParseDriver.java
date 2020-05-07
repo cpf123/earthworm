@@ -81,8 +81,6 @@ public class ParseDriver {
 
     public Deque<ASTNode> allnodelist;
 
-    public static int TABSPACE = 4;
-
     private static final Logger LOG = LoggerFactory.getLogger("hive.ql.parse.ParseDriver");
 
     public class ANTLRNoCaseStringStream extends ANTLRStringStream {
