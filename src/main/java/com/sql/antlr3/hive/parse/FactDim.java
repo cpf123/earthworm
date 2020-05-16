@@ -14,7 +14,7 @@ public class FactDim {
 
     public int DoubleFact(StringBuilder sb) {
         int flag = 0;
-        String[] strings = sb.toString().split(" ");
+        String[] strings = sb.toString().split("\\s");
         for (String s : strings) {
             if (!s.isEmpty()) {
                 String substring = s.substring(s.indexOf(':') + 1);
