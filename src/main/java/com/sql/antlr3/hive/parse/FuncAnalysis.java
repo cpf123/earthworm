@@ -29,9 +29,9 @@ public class FuncAnalysis {
 
         // 权重 s 1-10
         float IODense = 10 * DoubleFact + 2 * TABNAME_COUNT + 3 * SUBQUERY_COUNT;
-        IODense = IODense / (10 + 2 + 3);
+//        IODense = IODense / (10 + 2 + 3);
         float CPUDense = 10 * Aggregate_COUNT + 3 * SUBQUERY_COUNT;
-        CPUDense = CPUDense / (10 + 3);
+//        CPUDense = CPUDense / (10 + 3);
 
         float funcanalysis = IODense / (IODense + CPUDense);
 
