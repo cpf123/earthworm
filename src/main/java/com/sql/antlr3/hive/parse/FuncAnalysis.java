@@ -19,6 +19,7 @@ public class FuncAnalysis {
      * @param sqlstring
      * @return
      */
+
     public void funcanalysis(HashMap<String, Integer> hashMap, String sqlstring) {
 //        sqlstring = sqlstring + ";";
         Integer DoubleFact = hashMap.getOrDefault(Param.DoubleFact.value(), 0);
@@ -27,36 +28,38 @@ public class FuncAnalysis {
         Integer SUBQUERY_COUNT = hashMap.getOrDefault(Param.SUBQUERY_COUNT.value(), 0);
 
         // 权重 s 1-10
-        float IODense = 10 * DoubleFact + 2 * TABNAME_COUNT;
+        float IODense = sigmoid(10 * DoubleFact) + sigmoid(2 * TABNAME_COUNT);
         IODense = IODense / (10 + 2);
-        float CPUDense = 10 * Aggregate_COUNT + 3 * SUBQUERY_COUNT;
+        float CPUDense = sigmoid(10 * Aggregate_COUNT) + sigmoid(3 * SUBQUERY_COUNT);
         CPUDense = CPUDense / (10 + 3);
 
         float funcanalysis = IODense / (IODense + CPUDense);
 
-        if (funcanalysis > 0.5 && DoubleFact > 2 && TABNAME_COUNT > 5) {
-            new RunonLine().runon_hive(sqlstring);
-            System.out.println(funcanalysis);
-        } else if (funcanalysis < 0.5 && Aggregate_COUNT > 5 && SUBQUERY_COUNT > 8) {
-            new RunonLine().runon_spark(sqlstring);
-            System.out.println(funcanalysis);
-        } else {
-            new RunonLine().runon_impala(sqlstring);
-        }
+//        if (funcanalysis > 0.5 && DoubleFact > 2 && TABNAME_COUNT > 5) {
+//            new RunonLine().runon_hive(sqlstring);
+//            System.out.println(funcanalysis);
+//        } else if (funcanalysis < 0.5 && Aggregate_COUNT > 5 && SUBQUERY_COUNT > 8) {
+//            new RunonLine().runon_spark(sqlstring);
+//            System.out.println(funcanalysis);
+//        } else {
+//            new RunonLine().runon_impala(sqlstring);
+//        }
 
 // test
-//        if (funcanalysis > 0.5) {
-//            System.out.println(sqlstring);
-//            System.out.println(funcanalysis);
-//            new Runon_line().runon_hive(sqlstring);
-//        } else {
-//            System.out.println(sqlstring);
-//            System.out.println(funcanalysis);
-//            new Runon_line().runon_spark(sqlstring);
-//        }
+        if (funcanalysis > 0.5) {
+            System.out.println(sqlstring);
+            System.out.println(funcanalysis);
+            new RunonLine().runon_hive(sqlstring);
+        } else {
+            System.out.println(sqlstring);
+            System.out.println(funcanalysis);
+            new RunonLine().runon_spark(sqlstring);
+        }
 
 
     }
-
+    public static float sigmoid(float src) {
+        return (float) (1.0 / ( 1 + Math.exp(-src)));
+    }
 
 }

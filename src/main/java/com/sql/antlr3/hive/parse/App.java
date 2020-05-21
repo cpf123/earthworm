@@ -39,10 +39,8 @@ public class App {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if( in != null){
-                    in.close();
-                }
-
+                assert in != null;
+                in.close();
             }
 
             String[] hsqls = sqlstring.split(";");

@@ -304,6 +304,7 @@ public class ParseDriver {
             case HiveParser.TOK_CTE: {
                 increOrDefault(map, Param.WITH_COUNT.value());
                 List<Node> c1 = ((ASTNode) node).getChildren();
+                // 前序遍历
                 for (Node i1 : c1) {
                     QueryParse((ASTNode) i1, map, tmpmap, sb);
                 }
